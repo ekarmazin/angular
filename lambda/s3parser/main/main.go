@@ -4,10 +4,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	//"fmt"
-	"github.com/aws/aws-sdk-go-v2/aws"
-	//"log"
+	"sort"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	//"github.com/aws/aws-sdk-go-v2/aws/awserr"
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 
@@ -22,13 +21,14 @@ import (
 // https://serverless.com/framework/docs/providers/aws/events/apigateway/#lambda-proxy-integration
 type Response events.APIGatewayProxyResponse
 
-// M as an alias for map interface
-type M map[string]interface{}
+// M as an alias for map
+type M map[string]string
+
+var dataSlice []M
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
 	var buf bytes.Buffer
-	var dataSlice []M
 
 	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
@@ -36,18 +36,22 @@ func Handler(ctx context.Context) (Response, error) {
 	}
 
 	svc := s3.New(cfg)
-	input := &s3.ListObjectsInput{
+	input := &s3.ListObjectsV2Input{
 		Bucket:  aws.String("qs-production-angular-dev"),
-		MaxKeys: aws.Int64(10),
+		MaxKeys: aws.Int64(20),
 	}
 
-	req := svc.ListObjectsRequest(input)
+	req := svc.ListObjectsV2Request(input)
 	result, err := req.Send(context.Background())
 	res := result.Contents
 
+	// Fill out the slice with required data. Must be in type 'string'
 	for i := range result.Contents {
-		dataSlice = append(dataSlice, M{"Name": res[i].Key, "Time": res[i].LastModified, "URL": "https://assets.karmazin.me/" + *res[i].Key})
+		dataSlice = append(dataSlice, M{"Name": *res[i].Key, "Time": res[i].LastModified.String(), "URL": "https://assets.karmazin.me/" + *res[i].Key})
 	}
+
+	// Descending sort by date old to new
+	sort.Slice(dataSlice, func(i, j int) bool { return dataSlice[i]["Time"] > dataSlice[j]["Time"] })
 
 	body, err := json.Marshal(dataSlice)
 	if err != nil {
@@ -63,7 +67,7 @@ func Handler(ctx context.Context) (Response, error) {
 		Body:            buf.String(),
 		Headers: map[string]string{
 			"Content-Type":                "application/json",
-			"Access-Control-Allow-Origin": "*",
+			"Access-Control-Allow-Origin": "*", // <-- CORS
 		},
 	}
 
