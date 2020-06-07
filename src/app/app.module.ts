@@ -4,10 +4,12 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+// import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent
+    // AuthComponent
   ],
   imports: [
     BrowserModule,

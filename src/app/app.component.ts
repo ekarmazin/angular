@@ -11,16 +11,18 @@ import 'rxjs/add/operator/map'
 })
 export class AppComponent {
   title = 'app-dev01';
-  items = [];
-
+  items: any = [];
 
   constructor(private http: HttpClient) {
+
+
     this.http.get("https://data.karmazin.me/s3").toPromise().then(data => {
       console.log(data);
+      this.items = data;
+      // console.log(this.products[0]);
 
-      for (let key in data)
-        if (data.hasOwnProperty(key))
-          this.items.push(data[key]);
     });
+
+
   }
 }
