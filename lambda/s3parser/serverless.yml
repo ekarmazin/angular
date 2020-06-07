@@ -60,4 +60,5 @@ functions:
       - http:
           path: /
           method: get
-          cors: true
+          cors:
+            origin: '*'
