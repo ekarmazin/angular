@@ -15,7 +15,7 @@ export class AppComponent {
 
 
   constructor(private http: HttpClient) {
-    this.http.get("https://app.karmazin.me/data").toPromise().then(data => {
+    this.http.get("https://beflswopwl.execute-api.us-east-1.amazonaws.com/dev").toPromise().then(data => {
       console.log(data);
 
       for (let key in data)
