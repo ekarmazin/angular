@@ -28,8 +28,6 @@ var dataSlice []M
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
-	var buf bytes.Buffer
-
 	cfg, err := external.LoadDefaultAWSConfig()
 	if err != nil {
 		panic("failed to load config, " + err.Error())
@@ -59,6 +57,7 @@ func Handler(ctx context.Context) (Response, error) {
 	}
 
 	//Escape fancy chars to keep JSON clean
+	var buf bytes.Buffer
 	json.HTMLEscape(&buf, body)
 
 	resp := Response{
