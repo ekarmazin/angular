@@ -23,8 +23,6 @@ export class AuthComponent {
     const email = form.value.email;
     const password = form.value.password;
 
-    // console.log(email, password);
-
     let authObs: Observable<AuthResponseData>;
 
     authObs = this.authService.login(email, password);

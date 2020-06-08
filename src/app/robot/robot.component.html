@@ -18,17 +18,18 @@
   <div class="col-lg-8 robot-auto">
     <h4 style="text-align: left">Robot auto</h4>
     <div class="robot-auto-inner">
+      <!--create list of log names(links)-->
     <div class="col-lg-2 col"><ul *ngFor="let item of items">
       <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
     </ul></div>
-
+      <!--create list of times corresponding to log names(links)-->
     <div class="col-lg-4 col"><ul *ngFor="let item of items">
       <li  *ngIf="!item.Name.includes('log')">{{item["Time"]}}</li>
     </ul></div>
-
+      <!--create list of report names(links)-->
   <div class="col-lg-2 col"><ul *ngFor="let item of items">
     <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
-
+    <!--create list of times corresponding to repport names(links)-->
   </ul></div>
   <div class="col-lg-4 col">
   <ul *ngFor="let item of items">
