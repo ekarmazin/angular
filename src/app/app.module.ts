@@ -1,20 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {RouterModule, Routes} from "@angular/router";
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-// import { AuthComponent } from './auth/auth.component';
+import { AuthComponent } from './auth/auth.component';
+import { RobotComponent } from './robot/robot.component';
+import { HeaderComponent } from './header/header.component';
+
+
+const appRoutes: Routes = [
+  { path: '', redirectTo: '/auth', pathMatch: 'full' }, // <-- default route to HOME page
+  { path: 'auth', component: AuthComponent},
+  { path: 'robot', component: RobotComponent},
+
+]
 
 @NgModule({
   declarations: [
-    AppComponent
-    // AuthComponent
+    AppComponent,
+    AuthComponent,
+    RobotComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
