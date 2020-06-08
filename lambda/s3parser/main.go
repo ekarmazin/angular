@@ -24,8 +24,6 @@ type Response events.APIGatewayProxyResponse
 // M as an alias for map
 type M map[string]string
 
-var dataSlice []M
-
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
 	cfg, err := external.LoadDefaultAWSConfig()
@@ -35,7 +33,7 @@ func Handler(ctx context.Context) (Response, error) {
 
 	svc := s3.New(cfg)
 	input := &s3.ListObjectsV2Input{
-		Bucket:  aws.String("qs-production-angular-dev"),
+		Bucket:  aws.String("ss-stage-robot-assets"),
 		MaxKeys: aws.Int64(20),
 	}
 
@@ -43,9 +41,11 @@ func Handler(ctx context.Context) (Response, error) {
 	result, err := req.Send(context.Background())
 	res := result.Contents
 
+	var dataSlice []M
+
 	// Fill out the slice with required data. Must be in type 'string'
 	for i := range result.Contents {
-		dataSlice = append(dataSlice, M{"Name": *res[i].Key, "Time": res[i].LastModified.String(), "URL": "https://assets.karmazin.me/" + *res[i].Key})
+		dataSlice = append(dataSlice, M{"Name": *res[i].Key, "Time": res[i].LastModified.String(), "URL": "https://robot.assets.staging.sweet.io/" + *res[i].Key})
 	}
 
 	// Descending sort by date old to new
@@ -69,7 +69,6 @@ func Handler(ctx context.Context) (Response, error) {
 			"Access-Control-Allow-Origin": "*", // <-- CORS
 		},
 	}
-
 	return resp, nil
 }
 

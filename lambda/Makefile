@@ -2,7 +2,7 @@
 
 build: gomodgen
 	export GO111MODULE=on
-	env GOOS=linux go build -ldflags="-s -w" -o bin/main main/main.go
+	env GOOS=linux go build -ldflags="-s -w" -o bin/s3parser s3parser/main.go
 
 
 clean:
