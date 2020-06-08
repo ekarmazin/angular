@@ -22,7 +22,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string) {
-    console.log("test");
     return this.http
       .post<AuthResponseData>(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCqYezkiLFmFmfaa3p1HWC1FuV619p2fDI',
