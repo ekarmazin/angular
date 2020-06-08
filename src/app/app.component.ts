@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import 'rxjs/add/operator/map'
-// export type Item = { "Keys": string };
 
 @Component({
   selector: 'app-root',

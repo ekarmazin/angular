@@ -14,19 +14,19 @@ ul{
 
 }
 .robot-auto{
-  font-size: 11px;
+  font-size: 12px;
+
 }
 .robot-auto-inner{
-  max-height: 900px;
+  max-height: 1000px;
   overflow: scroll;
+
 }
 .col{
   padding: 10px 0 0 0;
   margin: 0px;
   background: white;
-  width: fit-content;
-
-
+  /*width: fit-content;*/
 }
 .robot-manual{
   text-align: left;
@@ -34,6 +34,7 @@ ul{
 }
 .robot-manual-inner{
   background: white;
+
   padding: 10px 20px;
 }
 button{
