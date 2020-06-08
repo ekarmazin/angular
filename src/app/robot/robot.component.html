@@ -3,40 +3,51 @@
   <br>
 
 <div class="row">
-  <div class="col-lg-4 robot-manual">
+  <div class="col-lg-6 robot-manual">
     <h4>Robot scheduled run</h4>
     <div class="robot-manual-inner">
 <p>Currently scheduled:</p><p style="font-size: 11px" >2020-06-08 20:00:00 +0000 UTC</p>
       <button class="btn btn-primary" type="button">
         Reschedule
       </button>
-      <button class="btn btn-primary" type="button">
-        Run now
-      </button>
     </div>
 </div>
-  <div class="col-lg-8 robot-auto">
-    <h4 style="text-align: left">Robot reports (auto and manual)</h4>
-    <div class="robot-auto-inner">
+  <div class="col-lg-6 robot-manual">
+    <h4>Robot run</h4>
+    <div class="robot-manual-inner">
+      <p>Run once to get a report on email and list below. (Allow up to 15 mins to process)</p>
+    <button class="btn btn-primary" type="button">
+      Run now
+    </button>
+    </div>
+  </div>
+</div>
+<br>
+  <div class="row">
+  <div class="robot-auto">
+    <h4 style="text-align: left; margin-left: 15px;">Robot reports and logs (auto and manual)</h4>
+    <div class="col-lg-12 robot-auto-inner">
+      <!--create list of report names/urls-->
     <div class="col-lg-3 col"><ul *ngFor="let item of items">
       <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
     </ul></div>
-
-    <div class="col-lg-4 col"><ul *ngFor="let item of items">
+      <!--create list of corresponding times-->
+    <div class="col-lg-3 col"><ul *ngFor="let item of items">
       <li  *ngIf="!item.Name.includes('log')">{{item["Time"]}}</li>
     </ul></div>
-
+      <!--create list of log names/urls-->
   <div class="col-lg-3 col"><ul *ngFor="let item of items">
     <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
-
   </ul></div>
-  <div class="col-lg-4 col">
+      <!--create list of corresponding times-->
+  <div class="col-lg-3 col">
   <ul *ngFor="let item of items">
     <li  *ngIf="item.Name.includes('log')">{{item["Time"]}}</li>
   </ul></div>
 
-    </div>
+    <!--</div>-->
   </div>
-</div>
+  </div>
+
 </div>
 
