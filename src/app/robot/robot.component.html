@@ -1,10 +1,10 @@
-<h2 style="margin: 5px 20px 10px 0px; text-align: right">Automation tool</h2>
+<h2 style="margin: 5px 20px 10px 0px; text-align: center">Automation tool</h2>
 <div class="center">
   <br>
 
 <div class="row">
   <div class="col-lg-4 robot-manual">
-    <h4>Robot manual</h4>
+    <h4>Robot scheduled run</h4>
     <div class="robot-manual-inner">
 <p>Currently scheduled:</p><p style="font-size: 11px" >2020-06-08 20:00:00 +0000 UTC</p>
       <button class="btn btn-primary" type="button">
@@ -16,9 +16,9 @@
     </div>
 </div>
   <div class="col-lg-8 robot-auto">
-    <h4 style="text-align: left">Robot auto</h4>
+    <h4 style="text-align: left">Robot reports (auto and manual)</h4>
     <div class="robot-auto-inner">
-    <div class="col-lg-2 col"><ul *ngFor="let item of items">
+    <div class="col-lg-3 col"><ul *ngFor="let item of items">
       <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
     </ul></div>
 
@@ -26,7 +26,7 @@
       <li  *ngIf="!item.Name.includes('log')">{{item["Time"]}}</li>
     </ul></div>
 
-  <div class="col-lg-2 col"><ul *ngFor="let item of items">
+  <div class="col-lg-3 col"><ul *ngFor="let item of items">
     <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
 
   </ul></div>
