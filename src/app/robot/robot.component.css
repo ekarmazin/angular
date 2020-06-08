@@ -1,17 +1,10 @@
+
 .center {
   margin: auto;
   width: 90%;
-  border: 3px solid #E74C3C;
   padding: 10px;
   text-align: center;
-}
-.column {
-  float: left;
-  width: 30%;
-}
-.column-time {
-  float: left;
-  width: 20%;
+  background: #f5f8fa;
 }
 ul{
   list-style-type:none;

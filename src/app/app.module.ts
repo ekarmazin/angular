@@ -10,7 +10,8 @@ import { RobotComponent } from './robot/robot.component';
 const appRoutes: Routes = [
   { path: '', component: AppComponent}, // <-- default route to HOME page
   { path: 'auth', component: AuthComponent},
-  { path: 'robot', component: RobotComponent}
+  { path: 'robot', component: RobotComponent},
+
 ]
 
 @NgModule({
