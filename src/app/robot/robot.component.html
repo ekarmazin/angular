@@ -19,7 +19,7 @@
     <h4 style="text-align: left">Robot auto</h4>
     <div class="robot-auto-inner">
     <div class="col-lg-2 col"><ul *ngFor="let item of items">
-      <li ><a *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
+      <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
     </ul></div>
 
     <div class="col-lg-4 col"><ul *ngFor="let item of items">
@@ -27,7 +27,7 @@
     </ul></div>
 
   <div class="col-lg-2 col"><ul *ngFor="let item of items">
-    <li ><a *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
+    <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
 
   </ul></div>
   <div class="col-lg-4 col">
