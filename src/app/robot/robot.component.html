@@ -1,0 +1,21 @@
+<div class="center">
+<h1>Title</h1>
+<div class="row">
+  <div class="column"><ul *ngFor="let item of items">
+    <li ><a *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
+  </ul></div>
+
+  <div class="column-time"><ul *ngFor="let item of items">
+    <li  *ngIf="item.Name.includes('log')">{{item["Time"]}}</li>
+  </ul></div>
+
+  <div class="column"><ul *ngFor="let item of items">
+    <li ><a *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
+  </ul></div>
+
+  <div class="column-time"><ul *ngFor="let item of items">
+    <li  *ngIf="!item.Name.includes('log')">{{item["Time"]}}</li>
+  </ul></div>
+</div>
+</div>
+<h1>Title</h1>

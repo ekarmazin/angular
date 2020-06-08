@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
+import { RobotComponent } from './robot/robot.component';
 
 const appRoutes: Routes = [
   // { path: '', component: AppComponent}, // <-- default route to HOME page
@@ -14,7 +15,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent
+    AuthComponent,
+    RobotComponent
   ],
   imports: [
     BrowserModule,
