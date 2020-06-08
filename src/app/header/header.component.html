@@ -1,0 +1,26 @@
+<nav class="">
+  <div class="">
+    <div class="sidenav">
+      <ul >
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a routerLink="/robot">Robot</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="!isAuthenticated">
+          <a routerLink="/auth">Login</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a>Rollback</a>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a>Deploy</a>
+        </li>
+      </ul>
+      <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li *ngIf="isAuthenticated">-->
+          <!--<a style="cursor: pointer;">Logout</a>-->
+        <!--</li>-->
+
+      <!--</ul>-->
+    </div>
+  </div>
+</nav>
