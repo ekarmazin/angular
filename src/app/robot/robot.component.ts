@@ -20,4 +20,15 @@ export class RobotComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onCreatePost(postData: { content: string }) {
+    // Send Http request
+    this.http
+      .post(
+        'https://test-5a7bf.firebaseio.com/posts.json',
+        postData
+      )
+      .subscribe(responseData => {
+        console.log(responseData);
+      });
+  }
 }

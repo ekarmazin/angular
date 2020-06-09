@@ -11,6 +11,27 @@
         Reschedule
       </button>
     </div>
+    <div class="col-md-12">
+      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm.value)">
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea
+            class="form-control"
+            id="content"
+            required
+            ngModel
+            name="content"
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!postForm.valid"
+        >
+          Send Post
+        </button>
+      </form>
+    </div>
 </div>
   <div class="col-lg-6 robot-manual">
     <h4>Robot run</h4>
@@ -19,6 +40,10 @@
     <button class="btn btn-primary" type="button">
       Run now
     </button>
+      <div class="row">
+
+      </div>
+
     </div>
   </div>
 </div>
