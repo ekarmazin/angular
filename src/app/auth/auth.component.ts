@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AuthService, AuthResponseData } from './auth.service';
+import {bool} from "aws-sdk/clients/signer";
 
 @Component({
   selector: 'app-auth',

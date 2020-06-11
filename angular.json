@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "app-dev01": {
+    "automation-portal": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/app-dev01",
+            "outputPath": "dist/automation-portal",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "app-dev01:build"
+            "browserTarget": "automation-portal:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "app-dev01:build:production"
+              "browserTarget": "automation-portal:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app-dev01:build"
+            "browserTarget": "automation-portal:build"
           }
         },
         "test": {
@@ -112,15 +112,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "app-dev01:serve"
+            "devServerTarget": "automation-portal:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "app-dev01:serve:production"
+              "devServerTarget": "automation-portal:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "app-dev01"
+  "defaultProject": "automation-portal"
 }
