@@ -15,7 +15,6 @@ export class RobotComponent implements OnInit {
       this.items = data;
     });
 
-
   }
   ngOnInit(): void {
   }
