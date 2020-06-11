@@ -17,6 +17,10 @@ export class RobotComponent implements OnInit {
 
 
   }
+
+  actionMethod(event: any) {
+    event.target.disabled = true;
+  }
   ngOnInit(): void {
   }
 
