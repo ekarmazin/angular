@@ -13,7 +13,7 @@ export const app = express();
 app.use(compression());
 app.use(cors());
 
-const DIST_FOLDER = join(process.cwd(), 'dist/app-dev01');
+const DIST_FOLDER = join(process.cwd(), 'dist/automation-portal');
 
 app.get('*.*', express.static(join(DIST_FOLDER), {
     maxAge: '1y'
