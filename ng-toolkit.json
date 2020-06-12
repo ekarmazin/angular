@@ -1,12 +1,12 @@
 {
   "serverless": {
     "provider": "aws",
-    "project": "app-dev01",
+    "project": "automation-portal",
     "skipInstall": false,
     "directory": ".",
     "lambdaTS": false,
     "offline": false,
-    "clientProject": "app-dev01",
+    "clientProject": "automation-portal",
     "serverless": {
       "aws": {},
       "gcloud": {}
