@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	//"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/cloudwatchevents"
 	"sort"
@@ -39,8 +38,10 @@ func Handler(ctx context.Context) (Response, error) {
 	}
 
 	req := svc.ListRulesRequest(input)
-	result, err := req.Send(context.TODO())
-
+	result, err := req.Send(context.Background())
+	if err != nil {
+		panic("No result came" + err.Error())
+	}
 	resultData := result.Rules[0].ScheduleExpression
 
 	// Fill out the slice with required data. Must be in type 'string'

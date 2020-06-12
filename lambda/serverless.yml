@@ -25,6 +25,10 @@ provider:
           - - "arn:aws:s3:::"
             - "ss-stage-robot-assets"
             - "/*"
+    - Effect: "Allow"
+      Action:
+        - "events:*"
+      Resource: "*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -41,7 +45,7 @@ functions:
     handler: bin/s3parser
     events:
       - http:
-          path: /
+          path: /logs
           method: get
           cors:
             origin: '*'
