@@ -8,8 +8,7 @@
     "offline": false,
     "clientProject": "automation-portal",
     "serverless": {
-      "aws": {},
-      "gcloud": {}
+      "aws": {}
     }
   }
 }
