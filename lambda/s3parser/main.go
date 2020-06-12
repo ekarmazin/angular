@@ -5,6 +5,8 @@ import (
 	"context"
 	"encoding/json"
 	"sort"
+	"time"
+	//"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	//"github.com/aws/aws-sdk-go-v2/aws/awserr"
@@ -31,21 +33,36 @@ func Handler(ctx context.Context) (Response, error) {
 		panic("failed to load config, " + err.Error())
 	}
 
+	location, _ := time.LoadLocation("America/New_York")
+	time := time.Now().AddDate(0, 0, -3)
+	startAfter := time.Format("200601021504")
+
 	svc := s3.New(cfg)
-	input := &s3.ListObjectsV2Input{
-		Bucket:  aws.String("ss-stage-robot-assets"),
-		MaxKeys: aws.Int64(20),
+	inputR := &s3.ListObjectsV2Input{
+		Bucket:     aws.String("ss-stage-robot-assets"),
+		MaxKeys:    aws.Int64(50),
+		StartAfter: aws.String("report-" + startAfter),
+	}
+	inputL := &s3.ListObjectsV2Input{
+		Bucket:     aws.String("ss-stage-robot-assets"),
+		MaxKeys:    aws.Int64(50),
+		StartAfter: aws.String("log-" + startAfter),
 	}
 
-	req := svc.ListObjectsV2Request(input)
-	result, err := req.Send(context.Background())
-	res := result.Contents
+	reqR := svc.ListObjectsV2Request(inputR)
+	reqL := svc.ListObjectsV2Request(inputL)
+	resultR, err := reqR.Send(context.Background())
+	resultL, err := reqL.Send(context.Background())
+
+	resR := resultR.Contents
+	resL := resultL.Contents
 
 	var dataSlice []M
 
 	// Fill out the slice with required data. Must be in type 'string'
-	for i := range result.Contents {
-		dataSlice = append(dataSlice, M{"Name": *res[i].Key, "Time": res[i].LastModified.String(), "URL": "https://robot.assets.staging.sweet.io/" + *res[i].Key})
+	for i := range resultR.Contents {
+		dataSlice = append(dataSlice, M{"Name": *resR[i].Key, "Time": resR[i].LastModified.In(location).Format("Jan 02 2006 15:04") + " EST", "URL": "https://robot.assets.staging.sweet.io/" + *resR[i].Key})
+		dataSlice = append(dataSlice, M{"Name": *resL[i].Key, "Time": resL[i].LastModified.In(location).Format("Jan 02 2006 15:04") + " EST", "URL": "https://robot.assets.staging.sweet.io/" + *resL[i].Key})
 	}
 
 	// Descending sort by date old to new
