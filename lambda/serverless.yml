@@ -29,6 +29,14 @@ provider:
       Action:
         - "events:*"
       Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "ecs:*"
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "iam:PassRole"
+      Resource: "arn:aws:iam::950473261671:role/ecsTaskExecutionRole"
 
 # you can define service wide environment variables here
 #  environment:

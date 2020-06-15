@@ -4,8 +4,13 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/aws/awserr"
+	"github.com/aws/aws-sdk-go-v2/aws/external"
+	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"log"
 )
 
@@ -22,24 +27,89 @@ type Data struct {
 }
 
 func handle(ctx context.Context, req Request) (Response, error) {
+	cfg, err := external.LoadDefaultAWSConfig()
+	if err != nil {
+		panic("failed to load config, " + err.Error())
+	}
+	svc := ecs.New(cfg)
 	resData := Data{}
-
 	code := 200
-	err := json.Unmarshal([]byte(req.Body), &resData)
+
+	// Parse the request data
+	err = json.Unmarshal([]byte(req.Body), &resData)
 	if err != nil {
 		log.Println(err)
 		code = 500
 	}
+	email := resData.Email
 
-	resData.Status = "Success"
+	// ECS Task parameters
+	params := &ecs.RunTaskInput{
+		TaskDefinition: aws.String("robot-framework-task:12"), // Required
+		Cluster:        aws.String("staging-automation"),
+		Count:          aws.Int64(1),
+		NetworkConfiguration: &ecs.NetworkConfiguration{
+			AwsvpcConfiguration: &ecs.AwsVpcConfiguration{
+				AssignPublicIp: ecs.AssignPublicIpEnabled,
+				SecurityGroups: []string{"sg-075a034f209339b51"},
+				Subnets:        []string{"subnet-093287b7cac4bde9a", "subnet-019e8e0108335e732", "subnet-072107355252f7b54"},
+			},
+		},
+		Overrides: &ecs.TaskOverride{
+			ContainerOverrides: []ecs.ContainerOverride{
+				{Environment: []ecs.KeyValuePair{
+					{Name: aws.String("EMAIL"),
+						Value: aws.String(email)},
+				},
+					Name: aws.String("robot-framework"),
+				},
+			},
+		},
+		StartedBy: aws.String("On-Demand"),
+	}
 
-	body, err := json.Marshal(resData)
+	// Run a task and push errors if any to logs
+	ecsReq := svc.RunTaskRequest(params)
+	res, err := ecsReq.Send(context.Background())
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case ecs.ErrCodeServerException:
+				fmt.Println(ecs.ErrCodeServerException, aerr.Error())
+			case ecs.ErrCodeException:
+				fmt.Println(ecs.ErrCodeException, aerr.Error())
+			case ecs.ErrCodeInvalidParameterException:
+				fmt.Println(ecs.ErrCodeInvalidParameterException, aerr.Error())
+			case ecs.ErrCodeClusterNotFoundException:
+				fmt.Println(ecs.ErrCodeClusterNotFoundException, aerr.Error())
+			case ecs.ErrCodeUnsupportedFeatureException:
+				fmt.Println(ecs.ErrCodeUnsupportedFeatureException, aerr.Error())
+			case ecs.ErrCodePlatformUnknownException:
+				fmt.Println(ecs.ErrCodePlatformUnknownException, aerr.Error())
+			case ecs.ErrCodePlatformTaskDefinitionIncompatibilityException:
+				fmt.Println(ecs.ErrCodePlatformTaskDefinitionIncompatibilityException, aerr.Error())
+			case ecs.ErrCodeAccessDeniedException:
+				fmt.Println(ecs.ErrCodeAccessDeniedException, aerr.Error())
+			case ecs.ErrCodeBlockedException:
+				fmt.Println(ecs.ErrCodeBlockedException, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+	}
+
+	// Prepare response body in json structure
+	body, err := json.Marshal(res)
 	if err != nil {
 		log.Println(err)
 		body = []byte("Internal Server Error")
 		code = 500
 	}
-
+	//Escape fancy chars to keep JSON clean
 	var buf bytes.Buffer
 	json.HTMLEscape(&buf, body)
 
