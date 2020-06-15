@@ -1,4 +1,4 @@
-<h2 style="margin: 5px 20px 10px 0px; text-align: center">Automation tool</h2>
+<h2 style="margin: 5px 20px 10px 0px; text-align: center">Robot Framework Automation</h2>
 <div class="center">
   <br>
 
@@ -6,8 +6,8 @@
   <div class="col-lg-6 robot-manual">
     <h4>Robot scheduled run</h4>
     <div class="robot-manual-inner">
-<p>Currently scheduled:</p><p style="font-size: 11px" >2020-06-08 20:00:00 +0000 UTC</p>
-      <button class="btn btn-primary" type="button">
+<p>Currently scheduled (UTC):</p><p style="font-size: 12px; font-weight: bold" >{{cron}}</p>
+      <button class="btn btn-primary" type="button" disabled>
         Reschedule
       </button>
     </div>
@@ -37,8 +37,9 @@
   <div class="col-lg-6 robot-manual">
     <h4>Robot run</h4>
     <div class="robot-manual-inner">
-      <p>Run once to get a report on email and list below. (Allow up to 15 mins to process)</p>
-    <button class="btn btn-primary" type="button">
+      <p>Run once to get a report on email and list below.</p>
+      <p style="font-size: 12px; font-weight: bold">Allow up to 15 min to process</p>
+    <button class="btn btn-primary" type="button" (click)="actionMethod($event)">
       Run now
     </button>
       <div class="row">
@@ -51,24 +52,16 @@
 <br>
   <div class="row">
   <div class="robot-auto">
-    <h4 style="text-align: left; margin-left: 15px;">Robot reports and logs (auto and manual)</h4>
+    <h4 style="text-align: left; margin-left: 15px; ">Robot reports and logs (auto and manual)</h4>
     <div class="col-lg-12 robot-auto-inner">
-      <!--create list of report names/urls-->
-    <div class="col-lg-3 col"><ul *ngFor="let item of items">
-      <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
+      <!--create list of report urls-->
+    <div class="col-lg-6 col report"><ul *ngFor="let item of items">
+      <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">Report - {{item["Time"]}}</a></li>
     </ul></div>
-      <!--create list of corresponding times-->
-    <div class="col-lg-3 col"><ul *ngFor="let item of items">
-      <li  *ngIf="!item.Name.includes('log')">{{item["Time"]}}</li>
-    </ul></div>
-      <!--create list of log names/urls-->
-  <div class="col-lg-3 col"><ul *ngFor="let item of items">
-    <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
-  </ul></div>
-      <!--create list of corresponding times-->
-  <div class="col-lg-3 col">
-  <ul *ngFor="let item of items">
-    <li  *ngIf="item.Name.includes('log')">{{item["Time"]}}</li>
+
+      <!--create list of log urls-->
+  <div class="col-lg-6 col log"> <ul *ngFor="let item of items">
+    <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">Log - {{item["Time"]}} </a></li>
   </ul></div>
 
     <!--</div>-->
