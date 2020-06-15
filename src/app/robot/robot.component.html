@@ -28,22 +28,14 @@
   <div class="robot-auto">
     <h4 style="text-align: left; margin-left: 15px; ">Robot reports and logs (auto and manual)</h4>
     <div class="col-lg-12 robot-auto-inner">
-      <!--create list of report names/urls-->
-    <div class="col-lg-3 col"><ul *ngFor="let item of items">
-      <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}}</a></li>
+      <!--create list of report urls-->
+    <div class="col-lg-6 col report"><ul *ngFor="let item of items">
+      <li ><a target="_blank" *ngIf="!item.Name.includes('log')" href="{{item['URL']}}">Report - {{item["Time"]}}</a></li>
     </ul></div>
-      <!--create list of corresponding times-->
-    <div class="col-lg-3 col"><ul *ngFor="let item of items">
-      <li  *ngIf="!item.Name.includes('log')">{{item["Time"]}}</li>
-    </ul></div>
-      <!--create list of log names/urls-->
-  <div class="col-lg-3 col"><ul *ngFor="let item of items">
-    <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">{{item["Name"]}} </a></li>
-  </ul></div>
-      <!--create list of corresponding times-->
-  <div class="col-lg-3 col">
-  <ul *ngFor="let item of items">
-    <li  *ngIf="item.Name.includes('log')">{{item["Time"]}}</li>
+
+      <!--create list of log urls-->
+  <div class="col-lg-6 col log"> <ul *ngFor="let item of items">
+    <li ><a target="_blank" *ngIf="item.Name.includes('log')" href="{{item['URL']}}">Log - {{item["Time"]}} </a></li>
   </ul></div>
 
     <!--</div>-->
