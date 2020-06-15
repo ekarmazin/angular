@@ -45,7 +45,7 @@ functions:
     handler: bin/s3parser
     events:
       - http:
-          path: /logs
+          path: logs
           method: get
           cors:
             origin: '*'
@@ -66,7 +66,7 @@ functions:
     handler: bin/manual
     events:
       - http:
-          path: /
+          path: manual
           method: post
           cors:
             origin: '*'
