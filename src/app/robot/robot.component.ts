@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {AuthComponent} from "../auth/auth.component";
+import {message} from "aws-sdk/clients/sns";
 
 @Component({
   selector: 'app-robot',
@@ -9,7 +11,7 @@ import {HttpClient} from "@angular/common/http";
 export class RobotComponent implements OnInit {
 
   items: any = [];
-
+  userEmail= '';
   constructor(private http: HttpClient) {
     this.http.get("https://data.assets.staging.sweet.io/s3").toPromise().then(data => {
       this.items = data;
@@ -18,6 +20,8 @@ export class RobotComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this.userEmail = sessionStorage.getItem('loggedUser');
+    console.log(sessionStorage.getItem('loggedUser'));
   }
 
   onCreatePost(postData: { content: string }) {
@@ -29,6 +33,9 @@ export class RobotComponent implements OnInit {
       )
       .subscribe(responseData => {
         console.log(responseData);
+
       });
+
   }
 }
+
