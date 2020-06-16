@@ -30,12 +30,12 @@ export class AuthComponent {
 
     authObs.subscribe(
       resData => {
-        console.log(resData.email);
+        // console.log(resData.email);
         sessionStorage.setItem('loggedUser', resData.email);
         this.router.navigate(['/robot']);
       },
       errorMessage => {
-        console.log(errorMessage);
+        // console.log(errorMessage);
         this.error = errorMessage;
       }
     );
