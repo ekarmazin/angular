@@ -1,13 +1,11 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { Component, OnInit } from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
   selector: 'app-robot',
   templateUrl: './robot.component.html',
   styleUrls: ['./robot.component.css']
 })
-
-
 
 export class RobotComponent implements OnInit {
 
@@ -35,11 +33,15 @@ export class RobotComponent implements OnInit {
   }
 
   onCreatePost() {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/json");
+
     // Send Http request
     this.http.post("https://data.assets.staging.sweet.io/run/manual",
       {
         "email": this.userEmail ,
-      })
+      },
+      {headers})
       .subscribe(
         (val) => {
           console.log("POST call successful value returned in body",
