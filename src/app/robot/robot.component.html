@@ -11,35 +11,13 @@
         Reschedule
       </button>
     </div>
-    <div class="col-md-12">
-      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm.value)">
-        <div class="form-group">
-          <label for="content">Content</label>
-          <textarea
-            class="form-control"
-            id="content"
-            required
-            ngModel
-            name="content"
-          ></textarea>
-        </div>
-        <button
-          class="btn btn-primary"
-          type="submit"
-          [disabled]="!postForm.valid"
-        >
-          Send Post
-        </button>
-        <p>[message]</p>
-      </form>
-    </div>
 </div>
   <div class="col-lg-6 robot-manual">
     <h4>Robot run</h4>
     <div class="robot-manual-inner">
       <p>Run once to get a report on email and list below.</p>
       <p style="font-size: 12px; font-weight: bold">Allow up to 15 min to process</p>
-    <button class="btn btn-primary" type="button" (click)="actionMethod($event)">
+    <button class="btn btn-primary" type="button" (click)="actionMethod($event)" (click)="onCreatePost()">
       Run now
     </button>
       <div class="row">
