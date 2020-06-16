@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, Input} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
 
 import { AuthService, AuthResponseData } from './auth.service';
 
@@ -29,7 +30,8 @@ export class AuthComponent {
 
     authObs.subscribe(
       resData => {
-        console.log(resData);
+        console.log(resData.email);
+        sessionStorage.setItem('loggedUser', resData.email);
         this.router.navigate(['/robot']);
       },
       errorMessage => {
@@ -40,5 +42,6 @@ export class AuthComponent {
 
     form.reset();
   }
+
 }
 
