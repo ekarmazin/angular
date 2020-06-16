@@ -35,6 +35,8 @@ func handle(ctx context.Context, req Request) (Response, error) {
 	resData := Data{}
 	code := 200
 
+	log.Print("Request FE: ", req.Body) //{"content":"{ \"email\": \"eugene@sweet.io\" }
+
 	// Parse the request data
 	err = json.Unmarshal([]byte(req.Body), &resData)
 	if err != nil {
@@ -42,6 +44,8 @@ func handle(ctx context.Context, req Request) (Response, error) {
 		code = 500
 	}
 	email := resData.Email
+
+	log.Print(resData)
 
 	// ECS Task parameters
 	params := &ecs.RunTaskInput{
