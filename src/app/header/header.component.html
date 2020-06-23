@@ -3,6 +3,9 @@
     <div class="sidenav">
       <ul >
         <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <p> You logged in as <b>{{userEmail}}</b></p>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
           <a routerLink="/robot">Robot</a>
         </li>
         <li routerLinkActive="active" *ngIf="!isAuthenticated">

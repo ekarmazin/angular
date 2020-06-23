@@ -12,13 +12,17 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   private userSub: Subscription;
+  userEmail= '';
 
   constructor(
     // private dataStorageService: DataStorageService,
     private authService: AuthService
   ) {}
 
+
+
   ngOnInit() {
+    this.userEmail = sessionStorage.getItem('loggedUser');
     this.userSub = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
       console.log(!user);
