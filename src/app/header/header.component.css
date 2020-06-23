@@ -7,7 +7,7 @@
   left: 0;
   background-color: #ebeff2;
   overflow-x: hidden;
-  padding-top: 40px;
+  padding-top: 50px;
 
 }
 .sidenav ul li a {
@@ -24,4 +24,10 @@
 
 li{
   list-style-type: none;
+}
+li p{
+  font-size: 11px;
+}
+ul{
+  padding-left: 30px;
 }
