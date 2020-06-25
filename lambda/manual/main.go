@@ -49,7 +49,7 @@ func handle(ctx context.Context, req Request) (Response, error) {
 
 	// ECS Task parameters
 	params := &ecs.RunTaskInput{
-		TaskDefinition: aws.String("robot-framework-task:12"), // Required
+		TaskDefinition: aws.String("robot-framework-task:13"), // Required
 		Cluster:        aws.String("staging-automation"),
 		Count:          aws.Int64(1),
 		NetworkConfiguration: &ecs.NetworkConfiguration{

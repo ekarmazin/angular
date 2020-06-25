@@ -34,7 +34,7 @@ func Handler(ctx context.Context) (Response, error) {
 	}
 
 	location, _ := time.LoadLocation("America/New_York")
-	time := time.Now().AddDate(0, 0, -3)
+	time := time.Now().AddDate(0, 0, -5)
 	startAfter := time.Format("200601021504")
 
 	svc := s3.New(cfg)
