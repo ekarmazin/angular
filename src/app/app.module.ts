@@ -8,13 +8,12 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { RobotComponent } from './robot/robot.component';
 import { HeaderComponent } from './header/header.component';
-
+import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/auth', pathMatch: 'full' }, // <-- default route to HOME page
+  { path: '', redirectTo: '/robot', pathMatch: 'full' }, // <-- default route to HOME page
   { path: 'auth', component: AuthComponent},
-  { path: 'robot', component: RobotComponent},
-
+  { path: 'robot', component: RobotComponent, canActivate: [AuthGuard]},
 ]
 
 @NgModule({
