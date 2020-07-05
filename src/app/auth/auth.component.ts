@@ -12,7 +12,7 @@ import { AuthService, AuthResponseData } from './auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-
+  @Input() username = '';
   error: string = null;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -32,7 +32,10 @@ export class AuthComponent {
       resData => {
         console.log(resData.email);
         sessionStorage.setItem('loggedUser', resData.email);
-        this.router.navigate(['/robot']);
+        // this.username = resData.email;
+        // console.log("username: ", this.username);
+          // this.router.navigate(['/robot']);
+
       },
       errorMessage => {
         console.log(errorMessage);

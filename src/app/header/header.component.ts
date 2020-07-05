@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 // import { DataStorageService } from '../shared/data-storage.service';
 import { AuthService } from '../auth/auth.service';
+import { AuthComponent } from '../auth/auth.component';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     // private dataStorageService: DataStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    // private authComponent: AuthComponent
   ) {}
 
 
@@ -28,6 +30,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       console.log(!user);
       console.log(!!user);
     });
+    // this.userEmail = this.authComponent.username;
+    // console.log("done ", this.userEmail);
   }
 
 
