@@ -1,21 +1,31 @@
-service: robot-automation
-
-frameworkVersion: '>=1.28.0 <2.0.0'
+service: automation-portal
 
 provider:
   name: aws
   runtime: go1.x
   memorySize: 128
   timeout: 1
-  stage: staging
+  stage: ${opt:stage, 'playground'}
   region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
+  environment:
+    TASK_DEFINITION: ${env:TASK_DEFINITION, "robot-framework-task:latest"}
+    CLUSTER_NAME: ${env:CLUSTER_NAME}
+    SECURITY_GROUP: ${env:SECURITY_GROUP}
+    SUBNET_IDS: ${env:SUBNET_IDS}
+    BUCKET_NAME: ${env:BUCKET_NAME}
+    ASSETS_URL: ${env:ASSETS_URL}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
         - "s3:ListBucket"
-      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", "ss-stage-robot-assets" ] ]  }
+      Resource:
+        - Fn::Join:
+          - ""
+          - - "arn:aws:s3:::"
+            - "ss-"
+            - ${self:provider.stage}
+            - "-robot-assets"
+            - "/*"
     - Effect: "Allow"
       Action:
         - "s3:GetObject"
@@ -23,7 +33,9 @@ provider:
         Fn::Join:
           - ""
           - - "arn:aws:s3:::"
-            - "ss-stage-robot-assets"
+            - "ss-"
+            - ${self:provider.stage}
+            - "-robot-assets"
             - "/*"
     - Effect: "Allow"
       Action:
@@ -37,10 +49,6 @@ provider:
       Action:
         - "iam:PassRole"
       Resource: "arn:aws:iam::950473261671:role/ecsTaskExecutionRole"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
 
 package:
   exclude:
@@ -65,11 +73,6 @@ functions:
           method: get
           cors:
             origin: '*'
-#      - http:
-#          path: /
-#          method: post
-#          cors:
-#            origin: '*'
   manual:
     handler: bin/manual
     events:
