@@ -12,6 +12,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/ecs"
 	"log"
+	"os"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the
@@ -49,14 +50,14 @@ func handle(ctx context.Context, req Request) (Response, error) {
 
 	// ECS Task parameters
 	params := &ecs.RunTaskInput{
-		TaskDefinition: aws.String("robot-framework-task:13"), // Required
-		Cluster:        aws.String("staging-automation"),
+		TaskDefinition: aws.String(os.Getenv("TASK_DEFINITION")), // Required
+		Cluster:        aws.String(os.Getenv("CLUSTER_NAME")),
 		Count:          aws.Int64(1),
 		NetworkConfiguration: &ecs.NetworkConfiguration{
 			AwsvpcConfiguration: &ecs.AwsVpcConfiguration{
 				AssignPublicIp: ecs.AssignPublicIpEnabled,
-				SecurityGroups: []string{"sg-075a034f209339b51"},
-				Subnets:        []string{"subnet-093287b7cac4bde9a", "subnet-019e8e0108335e732", "subnet-072107355252f7b54"},
+				SecurityGroups: []string{os.Getenv("SECURITY_GROUPS")},
+				Subnets:        []string{os.Getenv("SUBNETS")},
 			},
 		},
 		Overrides: &ecs.TaskOverride{
@@ -69,10 +70,12 @@ func handle(ctx context.Context, req Request) (Response, error) {
 				},
 			},
 		},
-		StartedBy: aws.String("On-Demand"),
+		StartedBy:       aws.String("On-Demand"),
+		PlatformVersion: aws.String("1.4.0"),
 	}
 
 	// Run a task and push errors if any to logs
+	log.Print("ECS Task definition: ", os.Getenv("TASK_DEFINITION"))
 	ecsReq := svc.RunTaskRequest(params)
 	res, err := ecsReq.Send(context.Background())
 	if err != nil {
