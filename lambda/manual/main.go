@@ -56,8 +56,8 @@ func handle(ctx context.Context, req Request) (Response, error) {
 		NetworkConfiguration: &ecs.NetworkConfiguration{
 			AwsvpcConfiguration: &ecs.AwsVpcConfiguration{
 				AssignPublicIp: ecs.AssignPublicIpEnabled,
-				SecurityGroups: []string{os.Getenv("SECURITY_GROUPS")},
-				Subnets:        []string{os.Getenv("SUBNETS")},
+				SecurityGroups: []string{os.Getenv("SECURITY_GROUP")},
+				Subnets:        []string{os.Getenv("SUBNET_IDS")},
 			},
 		},
 		Overrides: &ecs.TaskOverride{
