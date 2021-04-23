@@ -1,5 +1,6 @@
 service: automation-portal
-
+plugins:
+  - serverless-plugin-custom-domain
 provider:
   name: aws
   runtime: go1.x
@@ -49,6 +50,11 @@ provider:
       Action:
         - "iam:PassRole"
       Resource: "arn:aws:iam::950473261671:role/ecsTaskExecutionRole"
+
+custom:
+  domain:
+    name: ${env:API_DOMAINNAME}
+    basePath: ""
 
 package:
   exclude:
