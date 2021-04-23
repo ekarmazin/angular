@@ -5,14 +5,12 @@ provider:
   name: aws
   runtime: go1.x
   memorySize: 128
-  timeout: 1
+  timeout: 5
   stage: ${opt:stage, 'playground'}
   region: us-east-1
   environment:
     TASK_DEFINITION: ${env:TASK_DEFINITION, "robot-framework-task:latest"}
     CLUSTER_NAME: ${env:CLUSTER_NAME}
-    SECURITY_GROUP: ${env:SECURITY_GROUP}
-    SUBNET_IDS: ${env:SUBNET_IDS}
     BUCKET_NAME: ${env:BUCKET_NAME}
     ASSETS_URL: ${env:ASSETS_URL}
   iamRoleStatements:
