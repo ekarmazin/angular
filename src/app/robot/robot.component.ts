@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-robot',
@@ -13,14 +14,13 @@ export class RobotComponent implements OnInit {
 
   items: any = [];
   userEmail= '';
-
   cron:  any = [];
   constructor(private http: HttpClient) {
-    this.http.get("https://data.assets.staging.sweet.io/s3/logs").toPromise().then(data => {
+    this.http.get(environment.apiEndPoint + "/s3/logs").toPromise().then(data => {
       this.items = data;
     });
 
-    this.http.get("https://data.assets.staging.sweet.io/schedule/cron").toPromise().then(data => {
+    this.http.get(environment.apiEndPoint + "/schedule/cron").toPromise().then(data => {
       this.cron = data;
     });
 
@@ -36,7 +36,7 @@ export class RobotComponent implements OnInit {
 
   onCreatePost() {
     // Send Http request
-    this.http.post("https://data.assets.staging.sweet.io/run/manual",
+    this.http.post(environment.apiEndPoint + "/run/manual",
       {
         "email": this.userEmail ,
       })

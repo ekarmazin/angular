@@ -47,3 +47,4 @@ Thumbs.db
 .serverless
 lambda/bin/
 lambda/data.json
+.env*
